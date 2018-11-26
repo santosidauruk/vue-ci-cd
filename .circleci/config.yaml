@@ -1,0 +1,15 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10.13.0-stretch
+    working-directory: ~/playground
+    steps:
+      - checkout
+      - run:
+          name: Build Depedencies
+          command: yarn install
+      - run:
+          name: Build
+          command: yarn build
