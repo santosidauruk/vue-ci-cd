@@ -1,10 +1,13 @@
 version: 2
 
+defaults: &defaults
+  docker:
+    - image: circleci/node:10.13.0-stretch
+  working-directory: ~/playground
+
 jobs:
   build:
-    docker:
-      - image: circleci/node:10.13.0-stretch
-    working-directory: ~/playground
+    <<: *defaults
     steps:
       - checkout
       - run:
@@ -13,3 +16,9 @@ jobs:
       - run:
           name: Build
           command: yarn build
+  test:
+    <<: *defaults
+    steps:
+      - run:
+          name: Test Unit
+          command: yarn test:unit
