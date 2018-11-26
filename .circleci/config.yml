@@ -1,13 +1,13 @@
 version: 2
 
-defaults: &defaults
+node_container: &node_container
   docker:
     - image: circleci/node:10.13.0-stretch
-  working-directory: ~/playground/code
+  working-directory: ~/workspace/code
 
 jobs:
   build:
-    <<: *defaults
+    <<: *node_container
     steps:
       - checkout
       - run:
@@ -17,17 +17,18 @@ jobs:
           name: Build
           command: yarn build
       - persist_to_workspace:
-          root: ~/playground
+          root: ~/workspace
           paths:
             - code
   test:
-    <<: *defaults
+    <<: *node_container
     steps:
       - attach_workspace:
-          at: ~/playground
+          at: ~/workspace
       - run:
           name: Test Unit
           command: yarn test:unit
+
 workflows:
   version: 2
   build-test:
