@@ -8,26 +8,26 @@ defaults: &defaults
 jobs:
   build:
     <<: *defaults
-  steps:
-    - checkout
-    - run:
-        name: Build Depedencies
-        command: yarn install
-    - run:
-        name: Build
-        command: yarn build
-    - persist_to_workspace:
-        root: ~/playground
-        paths:
-          - code
+    steps:
+      - checkout
+      - run:
+          name: Build Depedencies
+          command: yarn install
+      - run:
+          name: Build
+          command: yarn build
+      - persist_to_workspace:
+          root: ~/playground
+          paths:
+            - code
   test:
     <<: *defaults
-  steps:
-    - attach_workspace:
-        at: ~/playground
-    - run:
-        name: Test Unit
-        command: yarn test:unit
+    steps:
+      - attach_workspace:
+          at: ~/playground
+      - run:
+          name: Test Unit
+          command: yarn test:unit
 workflows:
   version: 2
   build-test:
